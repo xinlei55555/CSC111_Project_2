@@ -1,0 +1,82 @@
+\documentclass[fontsize=11pt]{article}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in]{geometry}
+
+\title{CSC111 Project 2 Proposal: TODO FILL IN YOUR PROJECT TITLE HERE}
+\author{Xin Lei Lin, Evan Su, Rick Chen, Yi He (Robert) Li}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Problem Description and Research Question}
+JetSetGo
+
+
+Tasks
+1. Graph algorithms (shortest path djikstras, depth first search for existence, 
+each vertex is a GPS coordinate -- kosajaru's algorithm) 
+
+% 2. Machine learning to recommend where people should go :)
+ NO! Train it hahaha. ===> if we have time..
+
+or. hard. code.
+to recommend/scoring system
+
+3. Scipy to graph the map
+
+4. Database/flask backend with mysql python.?
+% https://www.w3schools.com/python/python_mysql_create_db.asp
+
+is it necessary?
+-- > we need to identify who the user is.
+(optional)
+
+Just create a bunch of json files with the right names
+
+5. Clustering algorihtms? KNN, SVM, (scikit-learn) ==> we would have to have user, and to recommend places.
+
+cosine similarity with the user , to recommend the user where to go
+
+6. 
+
+
+--------------
+steps:
+1. After we know who the user is
+
+2. user comes in, and says his location; "Hi I am currently in Dubai"
+
+3. Clustering would be for like, recommending where to.
+    3a) 1 model that says Hello, these places are very different!
+    ab) 1 model that says, hello, these places are very similar.
+
+4. Then, the user chooses the place where they want to go. Or types their own place
+    4a) Give the shortest path (weighted graph), also with the price.
+        4aa) Notice that we are using directed graphs.
+    
+    4b) Say time its' gonna take, and mashallah go fly.
+
+    4c) Recommend shortest, cheapest and "best value" ==> we define it
+
+5. Evan for frontend TTT WAAW SAINT MASHALLAH THANK YOU.
+    
+
+
+
+
+\section*{Computational Plan}
+
+TODO
+
+\section*{References}
+
+TODO
+
+% NOTE: LaTeX does have a built-in way of generating references automatically,
+% but it's a bit tricky to use so you are allowed to write your references manually
+% using a standard academic format like MLA or IEEE.
+% See project proposal handout for details.
+
+\end{document}
