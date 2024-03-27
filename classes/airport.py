@@ -1,5 +1,5 @@
 from pyflightdata import FlightData
-from typing import Optional
+from typing import Optional, Any
 
 class Airport:
     name: str      # "Toronto Pearson International Airport"
@@ -46,6 +46,25 @@ class Airport:
         self.temp = int(data["temp"]["celsius"])
         self.humid = int(data["humidity"])
         self.desc = data["sky"]["condition"]["text"]
+
+    def objectify(self) -> dict[str, Any]:
+        """
+        Return a dictionary representation of Airport's attributes.
+
+        >>> yyz = Airport("YYZ")
+        >>> yyz.objectify()
+        {
+            "name": "Toronto Pearson International Airport",
+            "code": "YYZ",
+            "lat": 43.6771,
+            "lon": 79.6334,
+            ...
+        }
+        """
+        return {
+            i: getattr(self, i) for i in dir(self)
+            if not i.startswith("__") and i != "objectify"
+        }
 
     ## Maybe
     density: None # Population density
