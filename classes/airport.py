@@ -1,5 +1,6 @@
 from pyflightdata import FlightData
 from typing import Optional, Any
+from flight import Flight
 
 class Airport:
     name: str      # "Toronto Pearson International Airport"
@@ -22,6 +23,7 @@ class Airport:
         To show text on hover in the map, pass it in as 'text'.
 
         Raises NameError if the given IATA airport code is invalid.
+        Raises an Exception if flight data can't be retrieved.
 
         >>> yyz = Airport("YYZ", "This is Toronto, the largest...")
         >>> yyz.country
@@ -36,13 +38,16 @@ class Airport:
         self.code = data["code"]["iata"]
         self.lat = data["position"]["latitude"]
         self.lon = data["position"]["longitude"]
-        self.elev = int(data["position"]["elevation"]["m"])
+        try: self.elev = int(data["position"]["elevation"]["m"])
+        except: assert "Sometimes elevation info is not available."
         self.country = data["position"]["country"]["name"]
         self.city = data["position"]["region"]["city"]
         self.tz = data["timezone"]["abbrName"]
         self.tz += f" (UTC{data["timezone"]["offset"]/3600:+.0f})"
 
         data = FlightData().get_airport_weather(code)
+        if not data:
+            raise Exception("Unable to get flight data.")
         self.temp = int(data["temp"]["celsius"])
         self.humid = int(data["humidity"])
         self.desc = data["sky"]["condition"]["text"]
@@ -66,7 +71,22 @@ class Airport:
             if not i.startswith("__") and i != "objectify"
         }
 
-    ## Maybe
-    density: None # Population density
-    traffic: None # How busy is the airport
-    type:    None # International, domestic, or regional
+    def get_flight_to(self, dest: "Airport") -> Flight:
+        """
+        Returns a single flight to the Airport 'dest'.
+
+        Raises an Exception if flight data can't be retrieved.
+        """
+        data = FlightData().get_flights_from_to(self.code, dest.code)
+        if not data:
+            raise Exception("Unable to get flight data.")
+        return Flight(
+            data[-1]["identification"]["number"]["default"],
+            data[-1]["airline"]["name"],
+            self.code,
+            dest.code,
+            self.lat,
+            self.lon,
+            dest.lat,
+            dest.lon
+        )
